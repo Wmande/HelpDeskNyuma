@@ -64,4 +64,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ticket::class);
     }
+
+  public function activeChatSessions()
+    {
+        return $this->hasMany(ChatSession::class, 'ict_staff_id')
+            ->where('status', 'active');
+    }
+
+    /**
+     * All messages sent by this user in chat sessions
+     */
+    public function chatMessages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }

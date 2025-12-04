@@ -81,4 +81,21 @@ class Ticket extends Model
     {
         return $this->status === self::STATUS_IN_PROGRESS;
     }
+
+     public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    /**
+     * Get unread message count for a specific user
+     */
+    public function unreadMessagesFor($userId)
+    {
+        return $this->messages()
+            ->where('user_id', '!=', $userId)
+            ->where('is_read', false)
+            ->count();
+    }
+    
 }
